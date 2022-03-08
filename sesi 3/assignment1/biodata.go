@@ -2,6 +2,7 @@ package main
 
 import (
 	"assignment1/helpers"
+	"encoding/json"
 	"fmt"
 	"os"
 	"strconv"
@@ -20,18 +21,21 @@ func main() {
 		fmt.Printf("Not Convert to int => Type Data: %T, Value: %v\n", Arg, Arg)
 	}
 
-	result := filter(students, Arg)
-	fmt.Printf("%#v", result)
-
+	result := filter(students)
+	resJson, _ := json.Marshal(result(Arg))
+	fmt.Println(string(resJson))
 }
 
-func filter(students []helpers.Student, Arg int) helpers.Student {
-	var result helpers.Student
-	for _, v := range students {
-		if v.Id == Arg {
-			result = v
-		}
-	}
+func filter(students []helpers.Student) func(int) helpers.Student {
 
-	return result
+	return func(arg int) helpers.Student {
+		var result helpers.Student
+		for _, v := range students {
+			if v.Id == arg {
+				result = v
+			}
+		}
+
+		return result
+	}
 }
