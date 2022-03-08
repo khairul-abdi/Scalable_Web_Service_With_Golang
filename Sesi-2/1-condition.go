@@ -49,11 +49,13 @@ func main() {
 	switch {
 	case score3 == 8:
 		fmt.Println("perfect")
+		fallthrough
 	case (score3 < 8) && (score3 > 3):
 		fmt.Println("not bad")
 		fallthrough
 	case score3 < 5:
 		fmt.Println("It is ok, but please study harder")
+		fallthrough
 	default:
 		{
 			fmt.Println("study harder")

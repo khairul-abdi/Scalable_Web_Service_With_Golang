@@ -78,4 +78,16 @@ func main() {
 	for i, person := range people {
 		fmt.Printf("Index: %d, name: %s, age: %s\n", i, person["name"], person["age"])
 	}
+
+	fmt.Println("----------------------------")
+	fmt.Println("Map (Combining slice with map)")
+	var people2 = map[string][]string{
+		"name": {"Khairul", "Zainy", "Anggi", "Nia"},
+		"age":  {"26", "24", "20", "19"},
+	}
+
+	for _, v := range people2 {
+		fmt.Println(v)
+	}
+
 }

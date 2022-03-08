@@ -15,27 +15,24 @@ var students = []helpers.Student{
 
 func main() {
 
-	Argument := os.Args[1]
-	Arg, err := strconv.Atoi(Argument)
+	argument := os.Args[1]
+	arg, err := strconv.Atoi(argument)
 	if err != nil {
-		fmt.Printf("Not Convert to int => Type Data: %T, Value: %v\n", Arg, Arg)
+		fmt.Printf("Not Convert to int => Type Data: %T, Value: %v\n", arg, arg)
 	}
 
-	result := filter(students)
-	resJson, _ := json.Marshal(result(Arg))
+	result := filter(students, arg)
+	resJson, _ := json.Marshal(result)
 	fmt.Println(string(resJson))
 }
 
-func filter(students []helpers.Student) func(int) helpers.Student {
-
-	return func(arg int) helpers.Student {
-		var result helpers.Student
-		for _, v := range students {
-			if v.Id == arg {
-				result = v
-			}
+func filter(students []helpers.Student, arg int) helpers.Student {
+	var result helpers.Student
+	for _, v := range students {
+		if v.Id == arg {
+			result = v
 		}
-
-		return result
 	}
+
+	return result
 }

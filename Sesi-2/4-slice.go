@@ -42,7 +42,7 @@ func main() {
 	fmt.Println("----------------------------")
 	fmt.Println("Slice (copy function)")
 
-	var fruits7 = []string{"apple", "banana", "mango"}
+	var fruits7 = []string{"apple", "banana", "mango", "watermelon"}
 	var fruits8 = []string{"durian", "pineapple", "starfruit"}
 
 	nn := copy(fruits7, fruits8)
