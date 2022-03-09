@@ -9,11 +9,14 @@ func main() {
 	var studenLists = []string{"Khairul", "Diah", "Zainy", "Anggi", "Nia"}
 	var find = findStudent(studenLists)
 
-	fmt.Println(find("khairul"))
+	// fmt.Println(find("khairul", 2))
+	res, num := find("khairul", 2)
+	fmt.Println(res)
+	fmt.Println(num)
 }
 
-func findStudent(students []string) func(string) string {
-	return func(s string) string {
+func findStudent(students []string) func(string, int) (string, int) {
+	return func(s string, num int) (string, int) {
 		var student string
 		var position int
 
@@ -26,8 +29,8 @@ func findStudent(students []string) func(string) string {
 		}
 
 		if student == "" {
-			return fmt.Sprintf("%s doesn't exist!!", s)
+			return fmt.Sprintf("%s doesn't exist!!", s), num
 		}
-		return fmt.Sprintf("We found %s at position %d", s, position+1)
+		return fmt.Sprintf("We found %s at position %d dan grade ", s, position+1), num
 	}
 }
