@@ -211,7 +211,6 @@ func (idb *InDB) UpdateOrder(ctx *gin.Context) {
 			ID,
 		)
 		if err != nil {
-			fmt.Println("ERRORRR =>>>>", err.Error())
 			panic(err)
 		}
 
@@ -223,7 +222,7 @@ func (idb *InDB) UpdateOrder(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"Message": "Data update successfully",
+		"data": updateOrder,
 	})
 }
 
