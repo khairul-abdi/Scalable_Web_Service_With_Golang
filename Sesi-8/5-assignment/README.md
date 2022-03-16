@@ -1,5 +1,10 @@
 # Orders API
 
+
+### How to run 
+- clone this project
+- change directory to Sesi-8/5-assignment
+- go run main.go
 ### GET Orders API
 
 This API is used to get orders data from Database
