@@ -9,6 +9,72 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func (idb *InDB) GetOrder(ctx *gin.Context) {
+	var (
+		order models.Order
+		items []models.Item
+	)
+
+	orderID := ctx.Param("orderID")
+	ID, err := strconv.Atoi(orderID)
+
+	if err != nil {
+		panic(err)
+	}
+
+	sqlStatementOrder := `SELECT * FROM orders WHERE order_id=$1`
+	rowsOrder, err := idb.DB.Query(sqlStatementOrder, ID)
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	defer rowsOrder.Close()
+	for rowsOrder.Next() {
+
+		err = rowsOrder.Scan(
+			&order.OrderID,
+			&order.CustomerName,
+			&order.OrderedAt,
+		)
+
+		if err != nil {
+			panic(err.Error())
+		}
+	}
+	fmt.Println("RESULTTT ", order)
+	sqlStatementItem := `SELECT * FROM items WHERE order_id=$1`
+	rowsItem, err := idb.DB.Query(sqlStatementItem, ID)
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	defer rowsItem.Close()
+	for rowsItem.Next() {
+		item := models.Item{}
+
+		err = rowsItem.Scan(
+			&item.ItemID,
+			&item.ItemCode,
+			&item.Description,
+			&item.Quantity,
+			&item.OrderId,
+		)
+		if err != nil {
+			panic(err.Error())
+		}
+
+		items = append(items, item)
+	}
+	order.Items = items
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"data": order,
+	})
+
+}
+
 func (idb *InDB) GetOrders(ctx *gin.Context) {
 	var results = []models.Order{}
 

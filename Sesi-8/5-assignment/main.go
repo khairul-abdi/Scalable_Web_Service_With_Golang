@@ -14,6 +14,7 @@ func main() {
 	router := gin.Default()
 
 	router.GET("/orders", inDB.GetOrders)
+	router.GET("/order/:orderID", inDB.GetOrder)
 	router.POST("/orders", inDB.CreateOrder)
 	router.PUT("/orders/:orderID", inDB.UpdateOrder)
 	router.DELETE("/orders/:orderID", inDB.DeleteOrder)

@@ -6,6 +6,43 @@
 - change directory to Sesi-8/5-assignment
 - create database example in this project (Sesi-8/5-assignment/db.sql)
 - go run main.go
+
+### GET Order API
+
+This API is used to get orders data from Database
+
+```
+curl --request GET 'curl --location --request GET 'http://localhost:8080/order/{orderID}'
+```
+
+### Response
+
+```
+{
+  "data": {
+    "order_id": 6,
+    "customer_name": "Khairul Abdi Dongoran",
+    "ordered_at": "2019-11-09T21:21:46Z",
+    "items": [
+      {
+        "item_id": 31,
+        "item_code": "ABC12",
+        "description": "A random description new",
+        "quantity": 10,
+        "order_id": 6
+      },
+      {
+        "item_id": 32,
+        "item_code": "ABC13",
+        "description": "A random description new",
+        "quantity": 100,
+        "order_id": 6
+      }
+    ]
+  }
+}
+```
+
 ### GET Orders API
 
 This API is used to get orders data from Database
