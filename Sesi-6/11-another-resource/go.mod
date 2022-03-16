@@ -1,4 +1,4 @@
-module another-resource
+module 11-another-resource
 
 go 1.17
 

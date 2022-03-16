@@ -21,11 +21,11 @@ var (
 )
 
 type Employee struct {
-	ID        int
-	Full_name string
-	Email     string
-	Age       int
-	Division  string
+	ID       int
+	FullName string
+	Email    string
+	Age      int
+	Division string
 }
 
 func main() {
@@ -45,18 +45,32 @@ func main() {
 	fmt.Println("Successfully connected to database")
 
 	// CreateEmployee()
-	// GetEmployees()
+	GetEmployees()
+	GetEmployee(3)
 	// UpdateEmployee()
-	DeleteEmployee()
+	// DeleteEmployee()
 }
 
 func CreateEmployee() {
 	var employee = Employee{}
 
-	sqlStatement := `INSERT INTO employees (full_name, email, age, division) VALUES ($1, $2, $3, $4)
-	Returning *`
+	sqlStatement := `
+		INSERT INTO employees (
+			full_name, 
+			email, age, 
+			division
+		) VALUES ($1, $2, $3, $4)
+		Returning *
+	`
 
-	err = db.QueryRow(sqlStatement, "Khairul", "kabdi@gmail.com", 26, "Backend Developer").Scan(&employee.ID, &employee.Full_name, &employee.Email, &employee.Age, &employee.Division)
+	err = db.QueryRow(sqlStatement, "Khairul", "diah@gmail.com", 26, "Backend Developer").
+		Scan(
+			&employee.ID,
+			&employee.FullName,
+			&employee.Email,
+			&employee.Age,
+			&employee.Division,
+		)
 
 	if err != nil {
 		panic(err)
@@ -68,8 +82,7 @@ func CreateEmployee() {
 func GetEmployees() {
 	var results = []Employee{}
 
-	sqlStatement := `SELECT * FROM employees`
-
+	sqlStatement := `SELECT * FROM employees ORDER BY id ASC`
 	rows, err := db.Query(sqlStatement)
 
 	if err != nil {
@@ -81,7 +94,13 @@ func GetEmployees() {
 	for rows.Next() {
 		var employee = Employee{}
 
-		err = rows.Scan(&employee.ID, &employee.Full_name, &employee.Email, &employee.Age, &employee.Division)
+		err = rows.Scan(
+			&employee.ID,
+			&employee.FullName,
+			&employee.Email,
+			&employee.Age,
+			&employee.Division,
+		)
 
 		if err != nil {
 			panic(err)
@@ -93,11 +112,50 @@ func GetEmployees() {
 	fmt.Println("Employee datas:", results)
 }
 
+func GetEmployee(id uint) {
+	var results = []Employee{}
+
+	sqlStatement := `SELECT * FROM employees WHERE id = $1 ORDER BY id ASC`
+	rows, err := db.Query(sqlStatement, id)
+
+	if err != nil {
+		panic(err)
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var employee = Employee{}
+
+		err = rows.Scan(
+			&employee.ID,
+			&employee.FullName,
+			&employee.Email,
+			&employee.Age,
+			&employee.Division,
+		)
+
+		if err != nil {
+			panic(err)
+		}
+
+		results = append(results, employee)
+	}
+
+	fmt.Println("Employee data:", results)
+}
+
 func UpdateEmployee() {
 	sqlStatement := `
-		UPDATE employees
-		SET full_name= $2, email= $3, division= $4, age= $5
-		WHERE id = $1;`
+		UPDATE 
+			employees
+		SET 
+			full_name= $2, 
+			email= $3, 
+			division= $4, 
+			age= $5
+		WHERE 
+			id = $1;`
 
 	res, err := db.Exec(sqlStatement, 1, "Khairul", "kabdi3844@gmail.com", "Backend Dev", 26)
 	if err != nil {
@@ -113,7 +171,12 @@ func UpdateEmployee() {
 }
 
 func DeleteEmployee() {
-	sqlStatement := `DELETE from employees WHERE id = $1;`
+	sqlStatement := `
+	DELETE FROM 
+		employees 
+	WHERE 
+		id = $1;
+	`
 
 	res, err := db.Exec(sqlStatement, 1)
 	if err != nil {

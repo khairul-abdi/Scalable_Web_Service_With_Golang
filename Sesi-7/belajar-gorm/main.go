@@ -14,10 +14,10 @@ func main() {
 
 	// createUser("doeloes@gmail.com")
 	// getUserById(2)
-	// updateUserById(1, "jhon@gmail.com")
-	// createProduct(3, "Compas", "Compas")
-	// getUsersWithProducts()
-	deleteProductById(5)
+	// updateUserById(3, "jhon@gmail.com")
+	// createProduct(5, "Compas", "Compas")
+	getUsersWithProducts()
+	// deleteProductById(5)
 }
 
 func createUser(email string) {
@@ -82,7 +82,7 @@ func getUserById(id uint) {
 func getUsersWithProducts() {
 	db := database.GetDB()
 
-	users := models.User{}
+	users := []models.User{}
 	err := db.Preload("Products").Find(&users).Error
 
 	if err != nil {
@@ -105,6 +105,15 @@ func updateUserById(id uint, email string) {
 		fmt.Println("Error updating user data:", err)
 		return
 	}
+
+	//Contoh lain untuk update
+	// test := models.User{
+	// 	ID:        3,
+	// 	Email:     "kkkkkk@gmail.com",
+	// 	CreatedAt: time.Now(),
+	// }
+
+	// db.Save(&test)
 
 	fmt.Println("Update user`s ")
 }
