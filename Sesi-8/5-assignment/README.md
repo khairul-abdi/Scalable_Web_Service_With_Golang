@@ -4,6 +4,7 @@
 ### How to run 
 - clone this project
 - change directory to Sesi-8/5-assignment
+- create database example in this project (Sesi-8/5-assignment/db.sql)
 - go run main.go
 ### GET Orders API
 

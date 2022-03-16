@@ -1,16 +1,13 @@
--- Database sale_db
+CREATE DATABASE sale_db;
 
--- DROP TABLE public.orders;
-
-CREATE TABLE public.orders (
+CREATE TABLE orders (
 	order_id serial NOT NULL,
 	customer_name varchar(255) NOT NULL,
 	ordered_at date NOT NULL,
 	CONSTRAINT orders_pk PRIMARY KEY (order_id)
 );
 
--- DROP TABLE public.items;
-CREATE TABLE public.items (
+CREATE TABLE items (
 	item_id serial NOT NULL,
 	item_code varchar(6) NOT NULL,
 	description varchar(255) NULL,
